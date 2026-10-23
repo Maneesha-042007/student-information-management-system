@@ -2,7 +2,7 @@ import json
 from urllib.request import Request, urlopen
 from urllib.error import HTTPError, URLError
 
-student_id = 4  # Replace with your test student's ID
+student_id = 9
 url = f"http://127.0.0.1:5000/students/{student_id}"
 
 request = Request(url, method="DELETE")

@@ -7,7 +7,7 @@ url = "http://127.0.0.1:5000/students"
 data = {
     "name": "Test Student",
     "department": "CSE",
-    "email": "namita_22102026_7462@example.com"
+    "email": "namita_22102026_8683@example.com"
 }
 
 request = urllib.request.Request(

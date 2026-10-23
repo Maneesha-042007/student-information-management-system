@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, render_template, redirect, url_for
 import sqlite3
 
 app = Flask(__name__)
@@ -203,6 +203,29 @@ def delete_student(id):
         "message": "Student deleted successfully",
         "id": id
     }), 200
+# STUDENT REGISTRATION
+@app.route("/register", methods=["GET", "POST"])
+def register_student():
+    if request.method == "POST":
+        name = request.form.get("name", "").strip()
+        department = request.form.get("department", "").strip()
+        email = request.form.get("email", "").strip()
+
+        if not name or not department or not email:
+            return "All fields are required", 400
+
+        with connect_db() as con:
+            cursor = con.execute(
+                """INSERT INTO students (name, department, email)
+                   VALUES (?, ?, ?)""",
+                (name, department, email)
+            )
+
+        return (
+            f"Registration successful! Student ID: {cursor.lastrowid}"
+        )
+
+    return render_template("register.html")
 
 
 # Run Flask application
