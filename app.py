@@ -226,6 +226,20 @@ def register_student():
         )
 
     return render_template("register.html")
+# SEARCH: Find students by name
+@app.route("/search", methods=["GET"])
+def search_student():
+    name = request.args.get("name", "").strip()
+
+    with connect_db() as con:
+        students = con.execute(
+            """SELECT id, name, email, department
+               FROM students
+               WHERE name LIKE ?""",
+            ("%" + name + "%",)
+        ).fetchall()
+
+    return jsonify([dict(student) for student in students]), 200
 
 
 # Run Flask application
